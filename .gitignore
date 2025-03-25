@@ -31,3 +31,25 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Application Properties ###
+src/main/resources/application.yml
+src/main/resources/application.properties
+src/main/resources/application-*.yml
+src/main/resources/application-*.properties
+
+### Security Keys and Secrets ###
+*.jks
+*.keystore
+*.p12
+*.key
+*.pem
+*.crt
+*.cer
+
+### Environment Variables ###
+.env
+.env.*
+
+### Cursor Rules ###
+.cursorrules
