@@ -1,0 +1,91 @@
+/* 회원가입 페이지 스타일 */
+.register-container {
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.register-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.register-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.form-control {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 0.75rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-check {
+    margin-bottom: 0.5rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-register {
+    background-color: var(--primary-color);
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+    background-color: darken(var(--primary-color), 10%);
+    transform: translateY(-2px);
+}
+
+.btn-social {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    color: #333;
+    padding: 0.75rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-social:hover {
+    background-color: #f8f9fa;
+    border-color: #ced4da;
+}
+
+.invalid-feedback {
+    font-size: 0.875rem;
+    color: var(--danger-color);
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .register-container {
+        margin: 1rem;
+    }
+    
+    .register-card {
+        padding: 1.5rem;
+    }
+    
+    .form-check {
+        margin-bottom: 0.25rem;
+    }
+} 

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${movie.title + ' - 무비리뷰'}">영화 제목 - 무비리뷰</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/movie-detail.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">무비리뷰</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/movies">영화</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reviews">리뷰</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/community">커뮤니티</a>
+                    </li>
+                </ul>
+                <form class="d-flex me-2" id="searchForm">
+                    <input class="form-control me-2" type="search" placeholder="영화 검색" id="searchInput">
+                    <button class="btn btn-outline-light" type="submit">검색</button>
+                </form>
+                <ul class="navbar-nav">
+                    <li class="nav-item" th:if="${!isAuthenticated}">
+                        <a class="nav-link" href="/login">로그인</a>
+                    </li>
+                    <li class="nav-item" th:if="${!isAuthenticated}">
+                        <a class="nav-link" href="/register">회원가입</a>
+                    </li>
+                    <li class="nav-item dropdown" th:if="${isAuthenticated}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <img th:src="${user.profileImage ?: '/images/default-profile.png'}" 
+                                 alt="프로필" 
+                                 class="rounded-circle"
+                                 style="width: 32px; height: 32px; object-fit: cover;">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" th:href="@{/profile/{id}(id=${user.id})}">프로필</a></li>
+                            <li><a class="dropdown-item" href="/profile/settings">설정</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">로그아웃</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <!-- 영화 기본 정보 -->
+        <div class="row mb-5">
+            <div class="col-md-4">
+                <div class="movie-poster">
+                    <img th:src="${movie.posterPath}" 
+                         th:alt="${movie.title}"
+                         class="img-fluid rounded shadow"
+                         onerror="this.src='/images/no-poster.jpg'">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h1 class="movie-title mb-3" th:text="${movie.title}">영화 제목</h1>
+                <div class="movie-info mb-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="rating me-3">
+                            <i class="bi bi-star-fill"></i>
+                            <span th:text="${movie.rating + ' / 5.0'}">4.5 / 5.0</span>
+                        </div>
+                        <div class="release-date">
+                            <i class="bi bi-calendar"></i>
+                            <span th:text="${movie.releaseDate}">2024-03-24</span>
+                        </div>
+                    </div>
+                    <div class="genres mb-3">
+                        <span th:each="genre : ${movie.genres}" 
+                              class="badge bg-secondary me-1" 
+                              th:text="${genre}">액션</span>
+                    </div>
+                    <div class="director mb-2">
+                        <i class="bi bi-camera"></i>
+                        <span th:text="${movie.director}">감독 이름</span>
+                    </div>
+                    <div class="actors">
+                        <i class="bi bi-people"></i>
+                        <span th:text="${movie.actors.join(', ')}">배우1, 배우2, 배우3</span>
+                    </div>
+                </div>
+                <div class="movie-description">
+                    <h5 class="mb-3">시놉시스</h5>
+                    <p th:text="${movie.description}">영화 설명...</p>
+                </div>
+                <div class="movie-actions mt-4">
+                    <button class="btn btn-primary me-2" id="writeReviewBtn">
+                        <i class="bi bi-pencil"></i> 리뷰 작성
+                    </button>
+                    <button class="btn btn-outline-primary" id="addToWatchlistBtn">
+                        <i class="bi bi-plus-circle"></i> 보고 싶어요
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 예고편 -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="section-title mb-4">예고편</h2>
+                <div class="trailer-container">
+                    <div class="ratio ratio-16x9">
+                        <iframe th:src="${movie.trailerUrl}" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 리뷰 섹션 -->
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="section-title mb-0">리뷰</h2>
+                    <div class="review-filters">
+                        <button class="btn btn-outline-secondary me-2 active" data-filter="latest">최신순</button>
+                        <button class="btn btn-outline-secondary me-2" data-filter="popular">인기순</button>
+                        <button class="btn btn-outline-secondary" data-filter="rating">평점순</button>
+                    </div>
+                </div>
+                <div id="reviewsList">
+                    <!-- 리뷰 목록이 여기에 동적으로 추가됩니다 -->
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-primary" id="loadMoreReviewsBtn">
+                        더 보기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 리뷰 작성 모달 -->
+    <div class="modal fade" id="writeReviewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">리뷰 작성</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reviewForm">
+                        <div class="mb-3">
+                            <label class="form-label">제목</label>
+                            <input type="text" class="form-control" id="reviewTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">평점</label>
+                            <div class="rating-input">
+                                <i class="bi bi-star" data-rating="1"></i>
+                                <i class="bi bi-star" data-rating="2"></i>
+                                <i class="bi bi-star" data-rating="3"></i>
+                                <i class="bi bi-star" data-rating="4"></i>
+                                <i class="bi bi-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="reviewRating" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">내용</label>
+                            <textarea class="form-control" id="reviewContent" rows="5" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hasSpoiler">
+                                <label class="form-check-label" for="hasSpoiler">
+                                    스포일러 포함
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="submitReviewBtn">작성하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>무비리뷰</h5>
+                    <p>영화 리뷰를 공유하고 토론하는 커뮤니티</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 무비리뷰. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/dist/movie-detail.js}"></script>
+</body>
+</html> 

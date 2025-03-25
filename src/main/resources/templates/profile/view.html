@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[[${user.nickname}]]의 프로필 - 무비리뷰</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/profile.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">무비리뷰</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" th:if="${isCurrentUser}">
+                        <a class="nav-link" th:href="@{/profile/settings}">프로필 설정</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutBtn">로그아웃</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <div class="profile-image-container mb-3">
+                            <img th:src="${user.profileImage ?: '/images/default-profile.png'}" 
+                                 alt="프로필 이미지" 
+                                 class="profile-image rounded-circle">
+                        </div>
+                        <h5 class="card-title">[[${user.nickname}]]</h5>
+                        <p class="text-muted">[[${user.email}]]</p>
+                        <div class="d-flex justify-content-center gap-2 mb-3">
+                            <button class="btn btn-outline-primary" id="followBtn" th:if="${!isCurrentUser}">
+                                <i class="bi bi-person-plus"></i> 팔로우
+                            </button>
+                            <button class="btn btn-outline-primary" id="unfollowBtn" th:if="${!isCurrentUser && isFollowing}" style="display: none;">
+                                <i class="bi bi-person-check"></i> 팔로잉
+                            </button>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <h6>팔로워</h6>
+                                    <p class="mb-0" id="followerCount">[[${user.followerCount}]]</p>
+                                </div>
+                                <div class="col">
+                                    <h6>팔로잉</h6>
+                                    <p class="mb-0" id="followingCount">[[${user.followingCount}]]</p>
+                                </div>
+                                <div class="col">
+                                    <h6>리뷰</h6>
+                                    <p class="mb-0" id="reviewCount">[[${user.reviewCount}]]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h6 class="card-title">자기소개</h6>
+                        <p class="card-text" th:text="${user.bio ?: '자기소개가 없습니다.'}"></p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">관심 장르</h6>
+                        <div class="genre-tags">
+                            <span th:each="genre : ${user.genres}" 
+                                  class="badge bg-primary me-1 mb-1" 
+                                  th:text="${genre}">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">작성한 리뷰</h5>
+                        <div class="review-list" id="reviewList">
+                            <!-- 리뷰 목록이 여기에 동적으로 추가됩니다 -->
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-primary" id="loadMoreReviews">
+                                더 보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">좋아요한 리뷰</h5>
+                        <div class="review-list" id="likedReviewList">
+                            <!-- 좋아요한 리뷰 목록이 여기에 동적으로 추가됩니다 -->
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-primary" id="loadMoreLikedReviews">
+                                더 보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>무비리뷰</h5>
+                    <p>영화 리뷰를 공유하고 토론하는 커뮤니티</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 무비리뷰. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/dist/profile-view.js}"></script>
+</body>
+</html> 

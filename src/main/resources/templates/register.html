@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - 무비리뷰</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">무비리뷰</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/movies">영화</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reviews">리뷰</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/community">커뮤니티</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="/login" class="btn btn-outline-light me-2">로그인</a>
+                    <a href="/register" class="btn btn-primary">회원가입</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">회원가입</h2>
+                        <form id="registerForm" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">이메일</label>
+                                <input type="email" class="form-control" id="email" required>
+                                <div class="invalid-feedback">
+                                    유효한 이메일 주소를 입력해주세요.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="password" required>
+                                <div class="invalid-feedback">
+                                    비밀번호를 입력해주세요.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+                                <input type="password" class="form-control" id="confirmPassword" required>
+                                <div class="invalid-feedback">
+                                    비밀번호가 일치하지 않습니다.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nickname" class="form-label">닉네임</label>
+                                <input type="text" class="form-control" id="nickname" required>
+                                <div class="invalid-feedback">
+                                    닉네임을 입력해주세요.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">관심 장르</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="action" id="genreAction">
+                                            <label class="form-check-label" for="genreAction">액션</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="drama" id="genreDrama">
+                                            <label class="form-check-label" for="genreDrama">드라마</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="comedy" id="genreComedy">
+                                            <label class="form-check-label" for="genreComedy">코미디</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="romance" id="genreRomance">
+                                            <label class="form-check-label" for="genreRomance">로맨스</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="horror" id="genreHorror">
+                                            <label class="form-check-label" for="genreHorror">호러</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="sci-fi" id="genreSciFi">
+                                            <label class="form-check-label" for="genreSciFi">SF</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">회원가입</button>
+                                <button type="button" class="btn btn-outline-secondary" id="socialRegister">
+                                    <i class="bi bi-google me-2"></i>Google로 계속하기
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>무비리뷰</h5>
+                    <p>영화 리뷰를 공유하고 토론하는 커뮤니티</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 무비리뷰. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/dist/register.js"></script>
+</body>
+</html> 

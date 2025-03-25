@@ -1,0 +1,73 @@
+.social-login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-social:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google {
+    background-color: #ffffff;
+    color: #757575;
+    border-color: #dadce0;
+}
+
+.btn-google:hover {
+    background-color: #f8f9fa;
+    border-color: #dadce0;
+}
+
+.btn-naver {
+    background-color: #03c75a;
+    color: #ffffff;
+    border-color: #03c75a;
+}
+
+.btn-naver:hover {
+    background-color: #02b350;
+    border-color: #02b350;
+}
+
+.btn-kakao {
+    background-color: #fee500;
+    color: #000000;
+    border-color: #fee500;
+}
+
+.btn-kakao:hover {
+    background-color: #f5db00;
+    border-color: #f5db00;
+}
+
+.btn-social img {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 576px) {
+    .social-login-buttons {
+        gap: 0.75rem;
+    }
+
+    .btn-social {
+        padding: 0.625rem;
+        font-size: 0.875rem;
+    }
+} 

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - 영화 리뷰 커뮤니티</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/social-login.css}">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">영화 리뷰</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/register}">회원가입</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="login-container">
+            <div class="login-card">
+                <h2 class="login-title">로그인</h2>
+                <form id="loginForm" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">이메일</label>
+                        <input type="email" class="form-control" id="email" required>
+                        <div class="invalid-feedback">
+                            올바른 이메일 주소를 입력해주세요.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">비밀번호</label>
+                        <input type="password" class="form-control" id="password" required>
+                        <div class="invalid-feedback">
+                            비밀번호를 입력해주세요.
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">자동 로그인</label>
+                    </div>
+                    <button type="submit" class="btn btn-login">로그인</button>
+                    <button type="button" class="btn btn-social" id="socialLogin">
+                        <img src="https://www.google.com/favicon.ico" alt="Google" width="20" height="20" class="me-2">
+                        Google로 로그인
+                    </button>
+                </form>
+                <div class="text-center mt-3">
+                    <a th:href="@{/register}" class="text-decoration-none">계정이 없으신가요? 회원가입</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>무비리뷰</h5>
+                    <p>영화 리뷰를 공유하고 토론하는 커뮤니티</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 무비리뷰. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/dist/login.js}"></script>
+    <script type="module">
+        import { createSocialLoginButtons } from '/js/src/components/social-login-buttons.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const socialLoginButtons = document.getElementById('socialLoginButtons');
+            socialLoginButtons.innerHTML = createSocialLoginButtons();
+        });
+    </script>
+</body>
+</html> 

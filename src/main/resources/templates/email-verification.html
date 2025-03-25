@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이메일 인증 - 영화 리뷰 커뮤니티</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/css/email-verification.css}" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">영화 리뷰</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">로그인</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="verification-container">
+            <div class="verification-card">
+                <h2 class="verification-title">이메일 인증</h2>
+                <div id="emailInputSection" class="mb-4">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">이메일 주소</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="email" required>
+                            <button class="btn btn-primary" id="sendVerificationBtn">인증번호 전송</button>
+                        </div>
+                        <div class="invalid-feedback">
+                            올바른 이메일 주소를 입력해주세요.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="verificationCodeSection" class="mb-4 d-none">
+                    <div class="mb-3">
+                        <label for="verificationCode" class="form-label">인증번호</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="verificationCode" required>
+                            <button class="btn btn-primary" id="verifyCodeBtn">인증하기</button>
+                        </div>
+                        <div class="invalid-feedback">
+                            인증번호를 입력해주세요.
+                        </div>
+                    </div>
+                    <div class="text-muted small">
+                        남은 시간: <span id="timer">3:00</span>
+                    </div>
+                </div>
+
+                <div id="verificationSuccessSection" class="text-center d-none">
+                    <i class="bi bi-check-circle-fill text-success mb-3" style="font-size: 3rem;"></i>
+                    <h4 class="mb-3">이메일 인증이 완료되었습니다!</h4>
+                    <p class="mb-4">이제 회원가입을 진행하실 수 있습니다.</p>
+                    <a th:href="@{/register}" class="btn btn-primary">회원가입으로 이동</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>무비리뷰</h5>
+                    <p>영화 리뷰를 공유하고 토론하는 커뮤니티</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 무비리뷰. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/dist/email-verification.js}"></script>
+</body>
+</html> 

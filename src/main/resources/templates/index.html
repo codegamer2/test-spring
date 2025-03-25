@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무비리뷰 - 영화 리뷰 커뮤니티</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">무비리뷰</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/movies">영화</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reviews">리뷰</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/community">커뮤니티</a>
+                    </li>
+                </ul>
+                <form class="d-flex me-2" id="searchForm">
+                    <input class="form-control me-2" type="search" placeholder="영화 검색" id="searchInput">
+                    <button class="btn btn-outline-light" type="submit">검색</button>
+                </form>
+                <ul class="navbar-nav">
+                    <li class="nav-item" th:if="${!isAuthenticated}">
+                        <a class="nav-link" href="/login">로그인</a>
+                    </li>
+                    <li class="nav-item" th:if="${!isAuthenticated}">
+                        <a class="nav-link" href="/register">회원가입</a>
+                    </li>
+                    <li class="nav-item dropdown" th:if="${isAuthenticated}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <img th:src="${user.profileImage ?: '/images/default-profile.png'}" 
+                                 alt="프로필" 
+                                 class="rounded-circle"
+                                 style="width: 32px; height: 32px; object-fit: cover;">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" th:href="@{/profile/{id}(id=${user.id})}">프로필</a></li>
+                            <li><a class="dropdown-item" href="/profile/settings">설정</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">로그아웃</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <!-- 추천 영화 섹션 -->
+        <section class="mb-5">
+            <h2 class="section-title mb-4">추천 영화</h2>
+            <div class="row" id="recommendedMovies">
+                <!-- 추천 영화 카드들이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </section>
+
+        <!-- 실시간 인기 리뷰 섹션 -->
+        <section class="mb-5">
+            <h2 class="section-title mb-4">실시간 인기 리뷰</h2>
+            <div class="row" id="popularReviews">
+                <!-- 인기 리뷰 카드들이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </section>
+
+        <!-- 팔로우 중인 사용자의 최신 리뷰 섹션 -->
+        <section class="mb-5" th:if="${isAuthenticated}">
+            <h2 class="section-title mb-4">팔로우 중인 사용자의 최신 리뷰</h2>
+            <div class="row" id="followingReviews">
+                <!-- 팔로우 중인 사용자의 리뷰 카드들이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </section>
+
+        <!-- 관심 장르의 새로운 영화 섹션 -->
+        <section class="mb-5" th:if="${isAuthenticated}">
+            <h2 class="section-title mb-4">관심 장르의 새로운 영화</h2>
+            <div class="row" id="newMoviesByGenre">
+                <!-- 관심 장르의 새로운 영화 카드들이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </section>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>무비리뷰</h5>
+                    <p>영화 리뷰를 공유하고 토론하는 커뮤니티</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 무비리뷰. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/dist/main.js}"></script>
+</body>
+</html> 

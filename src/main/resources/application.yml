@@ -1,0 +1,98 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: test
+    password: test
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        temp:
+          use_jdbc_metadata_defaults: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: # Redis 비밀번호가 있는 경우 설정
+      database: 0
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME} # Gmail 계정
+    password: ${MAIL_PASSWORD} # Gmail 앱 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
+          naver:
+            client-id: ${NAVER_CLIENT_ID}
+            client-secret: ${NAVER_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: Naver
+            client-authentication-method: client_secret_post
+            scope:
+              - email
+              - name
+              - profile_image
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: Kakao
+            client-authentication-method: client_secret_post
+            scope:
+              - profile_nickname
+              - account_email
+              - profile_image
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+jwt:
+  secret: 33e86ac48e993d06bb3afd382863457e6bca79daf983ec4ba783e75999b1f4a000e686223b87f05659f7f85e0d369a596d32d2df6f76c41fca708c23a7c15488
+  expiration: 86400000 # 24시간
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.moviereview: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always 
